@@ -1,4 +1,4 @@
-"""import pygame as p
+import pygame as p
 
 p.init()
 
@@ -67,4 +67,3 @@ while run:
             player_two.x = SCREEN_WIDTH - player_one.width
     clock.tick(60)
 p.quit()
-"""

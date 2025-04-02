@@ -20,7 +20,7 @@ def main():
             self.dist = reach
             
         def update(self):
-            if self.dist < 50:
+            if self.dist < 40:
                 self.rect.move_ip(self.numberx * bullet_speed + self.speedx, self.numbery * bullet_speed + self.speedy)
                 self.dist += 1
 
@@ -33,10 +33,10 @@ def main():
                 if self.rect.centery > SCREEN_HEIGHT:
                     self.rect.move_ip(0, -SCREEN_HEIGHT)
             else:
-                self.remove()
+                self.kill()
     # uppsättning av skärmen
-    SCREEN_WIDTH = 800 * 1.2
-    SCREEN_HEIGHT = 600 * 1.2
+    SCREEN_WIDTH = 800# * 1.2
+    SCREEN_HEIGHT = 600# * 1.2
     screen = p.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # Inladdning och position av det mesta
@@ -71,38 +71,39 @@ def main():
         p.display.update()
         screen.fill((0, 0, 0))
         screen.blit(player, player_rect)
-        original_player.blit(original_player, player_rect)
+        player.blit(original_player, player_rect)
         bullet_group.draw(screen)
         bullet_group.update()
 
         # knappar för att änra skeppets egenskaper
         if keys[p.K_RIGHT] or keys[p.K_d]:
             direct -= 5
-            player = p.transform.rotate(original_player, direct)
-            player_rect = player.get_rect(center = (x, y))
+            #player = p.transform.rotate(original_player, direct)
+            #aplayer_rect = player.get_rect(center = (x, y))
             
         if keys[p.K_LEFT] or keys[p.K_a]:
             direct += 5
-            player = p.transform.rotate(original_player, direct)
-            player_rect = player.get_rect(center = (x, y))
+            #player = p.transform.rotate(original_player, direct)
+            #player_rect = player.get_rect(center = (x, y))
+        
+        player = p.transform.rotate(original_player, direct)
 
         if keys[p.K_UP] or keys[p.K_w]:
-            speed_factor += 0.01
             change_x -= speed_factor * math.cos(math.radians(direct-90))
             change_y += speed_factor * math.sin(math.radians(direct-90))
         """if keys[p.K_s] or keys[p.K_DOWN]:
             change_x *= 0.95
             change_y *= 0.95"""
-        speed_factor = 0.2
+        #speed_factor = 0.2
         change_x *= 0.99
         change_y *= 0.99
         x += change_x
         y += change_y
         player_rect = player.get_rect(center = (x, y))
-        if keys[p.K_SPACE]:# and p.time.get_ticks() - last_shot > 200:
+        if keys[p.K_SPACE] and p.time.get_ticks() - last_shot > 300:
             bullet = bullets(x, y, reach)
             bullet_group.add(bullet)
-            #last_shot = p.time.get_ticks()
+            last_shot = p.time.get_ticks()
 
         # oändlig värld
         if player_rect.centery < 0:
