@@ -7,17 +7,17 @@ def main():
 
     # skott renderingssystemet
     class bullets(p.sprite.Sprite):
-        def __init__(self, x, y, reach):
+        def __init__(self, x, y):
             p.sprite.Sprite.__init__(self)
             self.image = p.image.load("bullet.png").convert_alpha()
             self.image = p.transform.scale(self.image, (4, 4))
             self.rect = self.image.get_rect()
             self.rect.center = [x + 10 * (-math.cos(math.radians(direct-90))), y + 10 * (math.sin(math.radians(direct-90)))]
-            self.numberx = (-math.cos(math.radians(direct-90)))
+            self.numberx = (-math.cos(math.radians(direct-90))) 
             self.numbery = (math.sin(math.radians(direct-90)))
             self.speedx = change_x
             self.speedy = change_y
-            self.dist = reach
+            self.dist = 0
             
         def update(self):
             if self.dist < 40:
@@ -52,8 +52,8 @@ def main():
     bullet_speed = 14
     bullet_group = p.sprite.Group()
     last_shot = 0
-    reach = 0
     clock = p.time.Clock()
+    fps = 60
 
     run = True
     while run:
@@ -76,19 +76,19 @@ def main():
         bullet_group.update()
 
         # knappar för att änra skeppets egenskaper
-        if keys[p.K_RIGHT] or keys[p.K_d]:
+        if keys[p.K_RIGHT] or keys[p.K_d] or keys[p.K_l]:
             direct -= 5
             #player = p.transform.rotate(original_player, direct)
             #aplayer_rect = player.get_rect(center = (x, y))
             
-        if keys[p.K_LEFT] or keys[p.K_a]:
+        if keys[p.K_LEFT] or keys[p.K_a] or keys[p.K_j]:
             direct += 5
             #player = p.transform.rotate(original_player, direct)
             #player_rect = player.get_rect(center = (x, y))
         
         player = p.transform.rotate(original_player, direct)
 
-        if keys[p.K_UP] or keys[p.K_w]:
+        if keys[p.K_UP] or keys[p.K_w] or keys[p.K_i]:
             change_x -= speed_factor * math.cos(math.radians(direct-90))
             change_y += speed_factor * math.sin(math.radians(direct-90))
         """if keys[p.K_s] or keys[p.K_DOWN]:
@@ -101,7 +101,7 @@ def main():
         y += change_y
         player_rect = player.get_rect(center = (x, y))
         if keys[p.K_SPACE] and p.time.get_ticks() - last_shot > 300:
-            bullet = bullets(x, y, reach)
+            bullet = bullets(x, y)
             bullet_group.add(bullet)
             last_shot = p.time.get_ticks()
 
@@ -116,7 +116,7 @@ def main():
             x -= SCREEN_WIDTH
         
         # programmets hastighet
-        clock.tick(60)
+        clock.tick(fps)
 
     p.quit()
 
