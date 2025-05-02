@@ -10,7 +10,7 @@ player_one = p.Rect((10, 250, 20, 100))
 player_two = p.Rect((SCREEN_WIDTH-30, 250, 20, 100))
 
 ball = p.Rect((SCREEN_WIDTH//2, SCREEN_HEIGHT//2, 20, 20))
-ball_speed = p.math.Vector2(-1,1)
+ball_speed = p.math.Vector2(-2,2)
 clock = p.time.Clock()
 
 run = True
